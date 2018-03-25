@@ -1,4 +1,6 @@
-﻿@using VisualizeHealthData.Web.Models
+﻿@model VisualizeHealthData.Web.Models.ViewModels.RecordOverviewViewModel
+
+@using VisualizeHealthData.Web.Models
 @{
     ViewBag.Title = "About";
 }
@@ -10,8 +12,30 @@
     Antal: @ViewBag.Record
 </p>
 
-<h2>Records</h2>
-@foreach (Record rec in ViewBag.Rec)
+@foreach (var typeOfRecord in Model.Records.Records)
 {
-    <p>@rec.value @rec.unit</p>
+    <h2>@typeOfRecord.Key</h2>
+
+    foreach (var sourceOfRecord in typeOfRecord.Value)
+    {
+        <h3>@sourceOfRecord.Key</h3>
+
+        <table class="table table-striped">
+            @foreach (var record in sourceOfRecord.Value)
+            {
+                <tr>
+                    <td>@record.value</td>
+                    <td>@record.unit</td>
+                    <td>@record.startDate</td>
+                    <td>@record.endDate</td>
+                    <td>@record.creationDate</td>
+                    <td>@record.type</td>
+                    <td>@record.sourceName</td>
+
+                </tr>
+            }
+        </table>
+    }
 }
+
+

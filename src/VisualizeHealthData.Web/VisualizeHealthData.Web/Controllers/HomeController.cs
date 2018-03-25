@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using VisualizeHealthData.Web.Models;
+using VisualizeHealthData.Web.Models.ViewModels;
 
 namespace VisualizeHealthData.Web.Controllers
 {
@@ -59,10 +60,40 @@ namespace VisualizeHealthData.Web.Controllers
                 rec.Add(record);
             }
 
+            RecordOverviewViewModel vm = new RecordOverviewViewModel();
+
+
+            var filteredRecs = rec.Where(c => c.RecordType.HasValue && c.RecordSource.HasValue).ToList();
+            foreach (var record in filteredRecs)
+            {
+                var typeKey = record.RecordType.Value.ToString();
+                var sourceKey = record.RecordSource.Value.ToString();
+
+                if (vm.Records.Records.ContainsKey(typeKey))
+                {
+                    if (vm.Records.Records[typeKey].ContainsKey(sourceKey))
+                    {
+                        vm.Records.Records[typeKey][sourceKey].Add(record);
+                    }
+                    else
+                    {
+                        vm.Records.Records[typeKey].Add(sourceKey,new List<Record>() {record});
+                    }
+                }
+                else
+                {
+                    var dicValue = new Dictionary<string, List<Record>>();
+                    dicValue.Add(sourceKey,new List<Record>(){record});
+                    vm.Records.Records.Add(typeKey, dicValue);
+                }
+            }
+
             ViewBag.Rec = rec;
             ViewBag.Record = rec.Count;
 
-            return View();
+
+
+            return View(vm);
         }
 
         public ActionResult Contact()

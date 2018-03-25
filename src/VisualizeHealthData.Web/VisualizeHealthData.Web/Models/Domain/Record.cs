@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Web;
 using System.Xml.Linq;
 
@@ -41,6 +42,59 @@ namespace VisualizeHealthData.Web.Models
 
             //</ Record >
 
+        }
+
+
+        public RecordType? RecordType
+        {
+            get
+            {
+                switch (typeField)
+                {
+                    case "HKQuantityTypeIdentifierBodyMass":
+                        return Models.RecordType.BodyMass;
+                    case "HKQuantityTypeIdentifierStepCount":
+                        return Models.RecordType.Steps;
+                    case "HKQuantityTypeIdentifierFlightsClimbed":
+                        return Models.RecordType.FlightsClimbed;
+                    case "HKCategoryTypeIdentifierMindfulSession":
+                        return Models.RecordType.Meditation;
+                    case "HKCategoryTypeIdentifierSleepAnalysis":
+                        return Models.RecordType.SleepAnalysis;
+                    case "HKQuantityTypeIdentifierDistanceWalkingRunning":
+                        return Models.RecordType.DistanceWalkCycling;
+                    case "HKQuantityTypeIdentifierDistanceCycling":
+                        return Models.RecordType.DistanceCycling;
+                    case "HKQuantityTypeIdentifierBodyMassIndex":
+                        return Models.RecordType.BodyMassIndex;
+
+
+                }
+                return (RecordType?) null;
+            }
+        }
+
+        public RecordSource? RecordSource
+        {
+            get
+            {
+                switch (sourceNameField)
+                {
+                    case "Health Mate":
+                        return Models.RecordSource.HealthMate;
+                    case "MyFitnessPal":
+                        return Models.RecordSource.MyFitnessPal;
+                    case "Endomondo":
+                        return Models.RecordSource.Endomondo;
+                }
+
+                if(sourceName.ToLower().Contains("phone"))
+                {
+                    return Models.RecordSource.Device;
+                }
+
+                return (RecordSource?)null;
+            }
         }
 
         private RecordMetadataEntry[] metadataEntryField;
