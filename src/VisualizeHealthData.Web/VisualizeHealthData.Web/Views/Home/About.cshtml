@@ -1,0 +1,17 @@
+﻿@using VisualizeHealthData.Web.Models
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+<p>
+    Antal: @ViewBag.Record
+</p>
+
+<h2>Records</h2>
+@foreach (Record rec in ViewBag.Rec)
+{
+    <p>@rec.value @rec.unit</p>
+}
