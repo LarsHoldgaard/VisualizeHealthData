@@ -15,7 +15,9 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
         {
             this.Metrics = new List<MetricTypeViewModel>()
             {
+
                 new MetricTypeViewModel("Weight", ExistioDataType.weight, "This is my weight, based on the wi-fi connected Withings scale.", showLatest:true),
+                new MetricTypeViewModel("Steps", ExistioDataType.steps, "This is the amount of daily steps", showLatest:false),
                 new MetricTypeViewModel("Meditation", ExistioDataType.meditation_min, "This is how many minutes I meditate pr day, based on the Headspace app."),
             };
         }

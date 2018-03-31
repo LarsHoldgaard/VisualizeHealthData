@@ -8,6 +8,7 @@ namespace VisualizeHealthData.Web.Models.Domain.Model.Existio
     public enum ExistioDataType
     {
         weight,
+        steps,
         meditation_min
     }
 }
