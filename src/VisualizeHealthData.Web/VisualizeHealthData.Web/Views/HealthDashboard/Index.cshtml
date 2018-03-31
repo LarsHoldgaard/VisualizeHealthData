@@ -12,6 +12,11 @@
             {
                 <h2>@metric.Headline</h2>
                 <p>@metric.Description</p>
+                if (metric.ShowLatest)
+                 {
+                     <p><span style="font-weight: bold; font-size: 18pt">LATEST: @metric.Data[0].Value @metric.Unit</span></p>     
+                 }
+                
                 @Html.Partial("_VisualizeData", metric)
             }
         }
@@ -27,7 +32,9 @@
                 (function () {
                     if ($('#@string.Format("chart_{0}", metric.DataType.ToString())').get(0)) {
                         var options = {
-                            width: '450px'
+                            width: '450px',
+                            onlyInteger: true,
+                            scaleMinSpace: 20
                         };
 
                         new Chartist.Line('#@string.Format("chart_{0}", metric.DataType.ToString())', {

@@ -15,7 +15,7 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
         {
             this.Metrics = new List<MetricTypeViewModel>()
             {
-                new MetricTypeViewModel("Weight", ExistioDataType.weight, "This is my weight, based on the wi-fi connected Withings scale."),
+                new MetricTypeViewModel("Weight", ExistioDataType.weight, "This is my weight, based on the wi-fi connected Withings scale.", showLatest:true),
                 new MetricTypeViewModel("Meditation", ExistioDataType.meditation_min, "This is how many minutes I meditate pr day, based on the Headspace app."),
             };
         }
@@ -27,6 +27,7 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
         public string Description { get; set; }
         public ExistioDataType DataType { get; set; }
         public List<ExistioDataPoint> Data { get; set; }
+        public bool ShowLatest { get; set; }
 
         public List<Tuple<string, decimal>> GraphData
         {
@@ -83,11 +84,15 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
             }
         }
 
-        public MetricTypeViewModel(string headline, ExistioDataType dataType, string description = "")
+        public MetricTypeViewModel(string headline, 
+            ExistioDataType dataType, 
+            string description = "",
+            bool showLatest =false)
         {
             this.Headline = headline;
             this.DataType = dataType;
             this.Description = description;
+            this.ShowLatest = showLatest;
             this.Data = new List<ExistioDataPoint>();
         }
     }

@@ -26,3 +26,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.ct-label {
+    font-size: 10pt;
+    font-weight: bold;
+}
