@@ -152,19 +152,30 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Controllers\HealthDashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Domain\Record.cs" />
-    <Compile Include="Models\Domain\RecordSource.cs" />
-    <Compile Include="Models\Domain\RecordType.cs" />
+    <Compile Include="Models\Domain\Model\Existio\ExistioDataPoint.cs" />
+    <Compile Include="Models\Domain\Model\Existio\ExistioDataType.cs" />
+    <Compile Include="Models\Domain\Model\Existio\ExistioResultSetDTO.cs" />
+    <Compile Include="Models\Domain\Model\Record\Record.cs" />
+    <Compile Include="Models\Domain\Model\Record\RecordSource.cs" />
+    <Compile Include="Models\Domain\Model\Record\RecordType.cs" />
+    <Compile Include="Models\Domain\Services\ExistioService.cs" />
+    <Compile Include="Models\ViewModels\HealthDashboard\HealthDashboardOverview.cs" />
     <Compile Include="Models\ViewModels\RecordOverviewViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\vendor\chartist\chartist.css" />
+    <Content Include="Content\vendor\chartist\chartist.js" />
+    <Content Include="Content\vendor\chartist\chartist.min.css" />
+    <Content Include="Content\vendor\chartist\chartist.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -174,6 +185,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Api\Views\web.config" />
+    <Content Include="Content\vendor\chartist\chartist.css.map" />
+    <Content Include="Content\vendor\chartist\chartist.min.js.map" />
+    <None Include="Properties\PublishProfiles\HealthDataIntegrations - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -200,9 +215,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\HealthDashboard\Index.cshtml" />
+    <Content Include="Views\HealthDashboard\_VisualizeData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Api\Controllers\" />
+    <Folder Include="Areas\Api\Models\" />
+    <Folder Include="Areas\Api\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

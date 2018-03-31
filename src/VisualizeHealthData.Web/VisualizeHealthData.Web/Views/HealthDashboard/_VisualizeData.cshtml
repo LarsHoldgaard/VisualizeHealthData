@@ -1,0 +1,33 @@
+﻿@model VisualizeHealthData.Web.Models.ViewModels.HealthDashboard.MetricTypeViewModel 
+@{
+    ViewBag.Title = "_VisualizeData";
+}
+
+
+<h3>Chart:</h3>
+<div class="col-lg-12">
+
+        <div style="width: 650px; height: 400px;">
+            <div id="@string.Format("chart_{0}", Model.DataType.ToString())" class="ct-chart ct-perfect-fourth ct-golden-section mt-4"></div>
+        </div>
+
+</div>
+
+<h3>Latest data</h3>
+<table class="table table-striped">
+    <tbody>
+    @foreach (var data in Model.Data)
+    {
+        <tr>
+            <td>
+                @data.Date.ToString("dd-MM-yyyy")
+            </td>
+            <td>
+                @(data.Value ?? 0) @Model.Unit
+            </td>
+        </tr>
+    }
+
+    </tbody>
+</table>
+

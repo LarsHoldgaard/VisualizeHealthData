@@ -1,0 +1,49 @@
+﻿@model VisualizeHealthData.Web.Models.ViewModels.HealthDashboard.HealthDashboardOverviewViewModel
+
+@{
+    ViewBag.Title = "title";
+
+}
+<div class="row">
+    <div class="col-md-6">
+        @foreach (var metric in Model.Metrics)
+        {
+            if (metric.Data.Any())
+            {
+                <h2>@metric.Headline</h2>
+                <p>@metric.Description</p>
+                @Html.Partial("_VisualizeData", metric)
+            }
+        }
+    </div>
+</div>
+
+
+@section scripts {
+    <script>
+        @foreach (var metric in Model.Metrics)
+        {
+            <text>
+                (function () {
+                    if ($('#@string.Format("chart_{0}", metric.DataType.ToString())').get(0)) {
+                        var options = {
+                            width: '450px'
+                        };
+
+                        new Chartist.Line('#@string.Format("chart_{0}", metric.DataType.ToString())', {
+                            labels: [@Html.Raw(String.Join(", ", metric.GraphData.Select(c => @"'" + c.Item1 + @"'").ToList()))],
+                            series: [
+                                [@Html.Raw(String.Join(", ", metric.GraphData.Select(c => (c.Item2.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))).ToList()))],
+                        ]
+                        }, options);
+                    }
+            })();
+
+            </text>
+        }
+
+
+
+
+    </script>
+}

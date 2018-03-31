@@ -17,6 +17,7 @@ namespace VisualizeHealthData.Web.Controllers
 
         public ActionResult Index()
         {
+            return RedirectToAction("Index", "HealthDashboard");
             return View();
         }
 
@@ -41,66 +42,5 @@ namespace VisualizeHealthData.Web.Controllers
 
         #endregion
 
-        public ActionResult About()
-        {
-
-            XDocument doc = XDocument.Load(Server.MapPath("~/UserUploads/eksporter.xml"));
-
-            var elements = doc.Root.Elements();
-
-            if (!elements.Any())
-            {
-                return null;
-            }
-
-            List<Record> rec = new List<Record>();
-            foreach (var element in elements.Where(c=>c.Name.LocalName == "Record").ToList())
-            {
-                var record = new Record(element);
-                rec.Add(record);
-            }
-
-            RecordOverviewViewModel vm = new RecordOverviewViewModel();
-
-
-            var filteredRecs = rec.Where(c => c.RecordType.HasValue && c.RecordSource.HasValue).ToList();
-            foreach (var record in filteredRecs)
-            {
-                var typeKey = record.RecordType.Value.ToString();
-                var sourceKey = record.RecordSource.Value.ToString();
-
-                if (vm.Records.Records.ContainsKey(typeKey))
-                {
-                    if (vm.Records.Records[typeKey].ContainsKey(sourceKey))
-                    {
-                        vm.Records.Records[typeKey][sourceKey].Add(record);
-                    }
-                    else
-                    {
-                        vm.Records.Records[typeKey].Add(sourceKey,new List<Record>() {record});
-                    }
-                }
-                else
-                {
-                    var dicValue = new Dictionary<string, List<Record>>();
-                    dicValue.Add(sourceKey,new List<Record>(){record});
-                    vm.Records.Records.Add(typeKey, dicValue);
-                }
-            }
-
-            ViewBag.Rec = rec;
-            ViewBag.Record = rec.Count;
-
-
-
-            return View(vm);
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
