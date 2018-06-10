@@ -9,6 +9,9 @@ namespace VisualizeHealthData.Web.Models.Domain.Model.Existio
     {
         weight,
         steps,
-        meditation_min
+        meditation_min,
+        mood,
+        energy
+
     }
 }

@@ -23,7 +23,7 @@
                 @data.Date.ToString("dd-MM-yyyy")
             </td>
             <td>
-                @(data.Value ?? 0) @Model.Unit
+                @(data.Value.HasValue ? (Math.Round(data.Value.Value,2)) : 0) @Model.Unit
             </td>
         </tr>
     }

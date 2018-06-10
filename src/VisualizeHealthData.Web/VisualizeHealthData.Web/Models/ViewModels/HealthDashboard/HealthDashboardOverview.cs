@@ -19,6 +19,9 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
                 new MetricTypeViewModel("Weight", ExistioDataType.weight, "This is my weight, based on the wi-fi connected Withings scale.", showLatest:true),
                 new MetricTypeViewModel("Steps", ExistioDataType.steps, "This is the amount of daily steps", showLatest:false),
                 new MetricTypeViewModel("Meditation", ExistioDataType.meditation_min, "This is how many minutes I meditate pr day, based on the Headspace app."),
+                new MetricTypeViewModel("Mood", ExistioDataType.mood, "This is a 1-5 rating of my mood a given day."),
+                new MetricTypeViewModel("Energy", ExistioDataType.energy, "This is my total energi consumption on a given day."),
+
             };
         }
     }
@@ -44,13 +47,14 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
 
                 DateTime start = DateTime.Now.Date.AddDays(-7);
                 DateTime end = DateTime.Now.Date;
-                
+
                 var lastMonth = Enumerable.Range(0, 1 + end.Subtract(start).Days)
                     .Select(offset => start.AddDays(offset))
                     .ToArray();
 
                 foreach (var day in lastMonth)
                 {
+                    
                     var existingDataPoint = Data.FirstOrDefault(c => c.Date.Date == day.Date);
                     decimal value = 0.0m;
 
@@ -60,10 +64,15 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
                         value = existingDataPoint.Value.Value;
                     }
 
+                    if (value > 0)
+                    {
+                     
 
-                    graph.Add(new Tuple<string, decimal>(
-                        day.ToString("dd/MM", CultureInfo.InvariantCulture),
-                        value));
+                        graph.Add(new Tuple<string, decimal>(
+                            day.ToString("dd/MM", CultureInfo.InvariantCulture),
+                            value));
+
+                    }
                 }
 
                 return graph;
@@ -80,16 +89,21 @@ namespace VisualizeHealthData.Web.Models.ViewModels.HealthDashboard
                         return "kg";
                     case ExistioDataType.meditation_min:
                         return "min";
+                    case ExistioDataType.energy:
+                        return "kcal";
+                    case ExistioDataType.steps:
+                        return "steps";
+
 
                 }
                 return string.Empty;
             }
         }
 
-        public MetricTypeViewModel(string headline, 
-            ExistioDataType dataType, 
+        public MetricTypeViewModel(string headline,
+            ExistioDataType dataType,
             string description = "",
-            bool showLatest =false)
+            bool showLatest = false)
         {
             this.Headline = headline;
             this.DataType = dataType;
